@@ -6,4 +6,17 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.15">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Modules\Bots\API\RiskPlatform.Modules.Bots.API.csproj" />
+    <ProjectReference Include="..\..\Modules\Bots\Application\RiskPlatform.Modules.Bots.Application.csproj" />
+    <ProjectReference Include="..\..\Modules\Bots\Infrastructure\RiskPlatform.Modules.Bots.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,5 +1,5 @@
 ﻿namespace RiskPlatform.Modules.Bots.Domain.ValueObjects;
-internal sealed class PythonFileName
+public sealed class PythonFileName
 {
     public string Value { get; }
 

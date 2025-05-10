@@ -13,13 +13,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiskPlatform.API", "src\API
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bots", "Bots", "{C18A7CFD-9CF2-4A91-B669-42A151329A0D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiskPlatform.Modules.Bots.Application", "src\Modules\Bots\RiskPlatform.Modules.Bots.Application\RiskPlatform.Modules.Bots.Application.csproj", "{6FFF889E-ADB4-4E94-9CDA-E5F7735689A9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiskPlatform.Modules.Bots.Application", "src\Modules\Bots\Application\RiskPlatform.Modules.Bots.Application.csproj", "{6FFF889E-ADB4-4E94-9CDA-E5F7735689A9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiskPlatform.Modules.Bots.Domain", "src\Modules\Bots\RiskPlatform.Modules.Bots.Domain\RiskPlatform.Modules.Bots.Domain.csproj", "{DA858F20-B777-4805-A172-2EC81F739593}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiskPlatform.Modules.Bots.Domain", "src\Modules\Bots\Domain\RiskPlatform.Modules.Bots.Domain.csproj", "{DA858F20-B777-4805-A172-2EC81F739593}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiskPlatform.Modules.Bots.Infrastructure", "src\Modules\Bots\RiskPlatform.Modules.Bots.Infrastructure\RiskPlatform.Modules.Bots.Infrastructure.csproj", "{A2A9426B-CA4A-413C-8B00-D931662A5954}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiskPlatform.Modules.Bots.Infrastructure", "src\Modules\Bots\Infrastructure\RiskPlatform.Modules.Bots.Infrastructure.csproj", "{A2A9426B-CA4A-413C-8B00-D931662A5954}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiskPlatform.Modules.Bots.API", "src\Modules\Bots\RiskPlatform.Modules.Bots.API\RiskPlatform.Modules.Bots.API.csproj", "{82AA1444-56C0-444E-B1EE-EBC33D5CE3B4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiskPlatform.Modules.Bots.API", "src\Modules\Bots\API\RiskPlatform.Modules.Bots.API.csproj", "{82AA1444-56C0-444E-B1EE-EBC33D5CE3B4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

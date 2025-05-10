@@ -10,4 +10,8 @@
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\Application\RiskPlatform.Modules.Bots.Application.csproj" />
+	</ItemGroup>
+
 </Project>
