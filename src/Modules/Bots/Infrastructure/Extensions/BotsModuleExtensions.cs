@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using RiskPlatform.Modules.Bots.Application.Repositories;
 using RiskPlatform.Modules.Bots.Infrastructure.Persistence;
 using RiskPlatform.Modules.Bots.Infrastructure.Repositories;
+using System.Reflection.Emit;
 
 namespace RiskPlatform.Modules.Bots.Infrastructure.Extensions;
 public static class BotsModuleExtensions

@@ -5,7 +5,9 @@ namespace RiskPlatform.Modules.Bots.Domain.Entities;
 
 public class Bot : EntityBase<int>
 {
-    public required string Name { get; set; }
-    public required string Description { get; set; }
-    public required PythonFileName ScriptFileName { get; set; }
+    public string Name { get; set; }
+    public string Description { get; set; }
+    public PythonFileName ScriptFileName { get; set; }
+    public ICollection<BotInputField> InputFields { get; set; }
+    public ICollection<BotOutputFile> OutputFiles { get; set; }
 }

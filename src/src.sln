@@ -1,0 +1,71 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{D82C56D6-B2CD-F611-9E31-04638F7EC30E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{4F52FD11-658E-A102-6CD3-7D7C16FFA15B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{CA253913-39DE-BFD0-C9A3-4B7EC6FBDF17}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiskPlatform.API", "API\RiskPlatform.Api\RiskPlatform.API.csproj", "{BC512D98-5E5E-A53F-3FF5-582DA5205014}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiskPlatform.Shared.Domain", "Shared\RiskPlatform.Shared.Domain\RiskPlatform.Shared.Domain.csproj", "{1B72A49E-5967-537A-7708-F5F697CFAC3E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bots", "Bots", "{5F4BDB33-7379-2D4F-EE6D-E1BD3913D217}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiskPlatform.Modules.Bots.API", "Modules\Bots\API\RiskPlatform.Modules.Bots.API.csproj", "{DDE4852D-38AD-42B3-500E-366394A133DE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiskPlatform.Modules.Bots.Application", "Modules\Bots\Application\RiskPlatform.Modules.Bots.Application.csproj", "{81A1FE46-DE09-6CEE-C892-AAC87C9312E7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiskPlatform.Modules.Bots.Domain", "Modules\Bots\Domain\RiskPlatform.Modules.Bots.Domain.csproj", "{4B009137-964A-56D4-A588-D57ED3A39500}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiskPlatform.Modules.Bots.Infrastructure", "Modules\Bots\Infrastructure\RiskPlatform.Modules.Bots.Infrastructure.csproj", "{DD77A2AE-D2CF-453A-F5B1-2DEFCD5057A4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BC512D98-5E5E-A53F-3FF5-582DA5205014}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC512D98-5E5E-A53F-3FF5-582DA5205014}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC512D98-5E5E-A53F-3FF5-582DA5205014}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC512D98-5E5E-A53F-3FF5-582DA5205014}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B72A49E-5967-537A-7708-F5F697CFAC3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B72A49E-5967-537A-7708-F5F697CFAC3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B72A49E-5967-537A-7708-F5F697CFAC3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B72A49E-5967-537A-7708-F5F697CFAC3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDE4852D-38AD-42B3-500E-366394A133DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDE4852D-38AD-42B3-500E-366394A133DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDE4852D-38AD-42B3-500E-366394A133DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDE4852D-38AD-42B3-500E-366394A133DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81A1FE46-DE09-6CEE-C892-AAC87C9312E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81A1FE46-DE09-6CEE-C892-AAC87C9312E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81A1FE46-DE09-6CEE-C892-AAC87C9312E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81A1FE46-DE09-6CEE-C892-AAC87C9312E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B009137-964A-56D4-A588-D57ED3A39500}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B009137-964A-56D4-A588-D57ED3A39500}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B009137-964A-56D4-A588-D57ED3A39500}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B009137-964A-56D4-A588-D57ED3A39500}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD77A2AE-D2CF-453A-F5B1-2DEFCD5057A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD77A2AE-D2CF-453A-F5B1-2DEFCD5057A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD77A2AE-D2CF-453A-F5B1-2DEFCD5057A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD77A2AE-D2CF-453A-F5B1-2DEFCD5057A4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BC512D98-5E5E-A53F-3FF5-582DA5205014} = {D82C56D6-B2CD-F611-9E31-04638F7EC30E}
+		{1B72A49E-5967-537A-7708-F5F697CFAC3E} = {4F52FD11-658E-A102-6CD3-7D7C16FFA15B}
+		{5F4BDB33-7379-2D4F-EE6D-E1BD3913D217} = {CA253913-39DE-BFD0-C9A3-4B7EC6FBDF17}
+		{DDE4852D-38AD-42B3-500E-366394A133DE} = {5F4BDB33-7379-2D4F-EE6D-E1BD3913D217}
+		{81A1FE46-DE09-6CEE-C892-AAC87C9312E7} = {5F4BDB33-7379-2D4F-EE6D-E1BD3913D217}
+		{4B009137-964A-56D4-A588-D57ED3A39500} = {5F4BDB33-7379-2D4F-EE6D-E1BD3913D217}
+		{DD77A2AE-D2CF-453A-F5B1-2DEFCD5057A4} = {5F4BDB33-7379-2D4F-EE6D-E1BD3913D217}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {17861C88-90B8-4030-AFA7-ED99BB17718D}
+	EndGlobalSection
+EndGlobal

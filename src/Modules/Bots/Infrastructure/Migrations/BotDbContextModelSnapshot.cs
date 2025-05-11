@@ -17,6 +17,7 @@ namespace RiskPlatform.Modules.Bots.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .HasDefaultSchema("Bots")
                 .HasAnnotation("ProductVersion", "8.0.15")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
@@ -51,7 +52,68 @@ namespace RiskPlatform.Modules.Bots.Infrastructure.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Bots");
+                    b.ToTable("Bots", "Bots");
+                });
+
+            modelBuilder.Entity("RiskPlatform.Modules.Bots.Domain.Entities.BotInputField", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BotId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("FieldName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("FieldType")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTimeOffset?>("ModifiedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BotId");
+
+                    b.ToTable("BotInputFields", "Bots");
+                });
+
+            modelBuilder.Entity("RiskPlatform.Modules.Bots.Domain.Entities.BotOutputFile", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BotId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<DateTimeOffset?>("ModifiedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BotId");
+
+                    b.ToTable("BotOutputFiles", "Bots");
                 });
 
             modelBuilder.Entity("RiskPlatform.Modules.Bots.Domain.Entities.Bot", b =>
@@ -69,14 +131,63 @@ namespace RiskPlatform.Modules.Bots.Infrastructure.Migrations
 
                             b1.HasKey("BotId");
 
-                            b1.ToTable("Bots");
+                            b1.ToTable("Bots", "Bots");
 
                             b1.WithOwner()
                                 .HasForeignKey("BotId");
                         });
 
-                    b.Navigation("ScriptFileName")
+                    b.Navigation("ScriptFileName");
+                });
+
+            modelBuilder.Entity("RiskPlatform.Modules.Bots.Domain.Entities.BotInputField", b =>
+                {
+                    b.HasOne("RiskPlatform.Modules.Bots.Domain.Entities.Bot", "Bot")
+                        .WithMany("InputFields")
+                        .HasForeignKey("BotId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Bot");
+                });
+
+            modelBuilder.Entity("RiskPlatform.Modules.Bots.Domain.Entities.BotOutputFile", b =>
+                {
+                    b.HasOne("RiskPlatform.Modules.Bots.Domain.Entities.Bot", "Bot")
+                        .WithMany("OutputFiles")
+                        .HasForeignKey("BotId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.OwnsOne("RiskPlatform.Modules.Bots.Domain.ValueObjects.OutputFileName", "FileName", b1 =>
+                        {
+                            b1.Property<int>("BotOutputFileId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasMaxLength(255)
+                                .HasColumnType("nvarchar(255)")
+                                .HasColumnName("FileName");
+
+                            b1.HasKey("BotOutputFileId");
+
+                            b1.ToTable("BotOutputFiles", "Bots");
+
+                            b1.WithOwner()
+                                .HasForeignKey("BotOutputFileId");
+                        });
+
+                    b.Navigation("Bot");
+
+                    b.Navigation("FileName");
+                });
+
+            modelBuilder.Entity("RiskPlatform.Modules.Bots.Domain.Entities.Bot", b =>
+                {
+                    b.Navigation("InputFields");
+
+                    b.Navigation("OutputFiles");
                 });
 #pragma warning restore 612, 618
         }
