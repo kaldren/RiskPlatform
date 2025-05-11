@@ -29,17 +29,24 @@ public class BotConfiguration : IEntityTypeConfiguration<Bot>
     public void Configure(EntityTypeBuilder<Bot> builder)
     {
         builder.HasKey(x => x.Id);
-        builder.Property(x => x.Name).IsRequired().HasMaxLength(100);
-        builder.Property(x => x.Description).IsRequired().HasMaxLength(500);
 
-        builder.OwnsOne(b => b.ScriptFileName, owned =>
+        builder.Property(x => x.Name)
+               .IsRequired()
+               .HasMaxLength(100);
+
+        builder.HasIndex(x => x.Name)
+               .IsUnique(); // Bots should have unique names (need to check if this is correct)
+
+        builder.Property(x => x.Description)
+               .IsRequired()
+               .HasMaxLength(500);
+
+        builder.OwnsOne(x => x.ScriptFileName, owned =>
         {
             owned.Property(p => p.Value)
-                .HasColumnName("ScriptFileName")
-                .IsRequired()
-                .HasMaxLength(255);
+                 .HasColumnName("ScriptFileName")
+                 .IsRequired()
+                 .HasMaxLength(255);
         });
-
-        builder.Navigation(b => b.ScriptFileName).IsRequired();
     }
 }

@@ -12,7 +12,7 @@ using RiskPlatform.Modules.Bots.Infrastructure.Persistence;
 namespace RiskPlatform.Modules.Bots.Infrastructure.Migrations
 {
     [DbContext(typeof(BotDbContext))]
-    [Migration("20250510205236_InitialCreate")]
+    [Migration("20250511091406_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -27,14 +27,22 @@ namespace RiskPlatform.Modules.Bots.Infrastructure.Migrations
 
             modelBuilder.Entity("RiskPlatform.Modules.Bots.Domain.Entities.Bot", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
+
+                    b.Property<DateTimeOffset?>("ModifiedAt")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -43,6 +51,9 @@ namespace RiskPlatform.Modules.Bots.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Name")
+                        .IsUnique();
+
                     b.ToTable("Bots");
                 });
 
@@ -50,8 +61,8 @@ namespace RiskPlatform.Modules.Bots.Infrastructure.Migrations
                 {
                     b.OwnsOne("RiskPlatform.Modules.Bots.Domain.ValueObjects.PythonFileName", "ScriptFileName", b1 =>
                         {
-                            b1.Property<Guid>("BotId")
-                                .HasColumnType("uniqueidentifier");
+                            b1.Property<int>("BotId")
+                                .HasColumnType("int");
 
                             b1.Property<string>("Value")
                                 .IsRequired()

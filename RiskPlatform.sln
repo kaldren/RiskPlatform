@@ -21,6 +21,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiskPlatform.Modules.Bots.I
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiskPlatform.Modules.Bots.API", "src\Modules\Bots\API\RiskPlatform.Modules.Bots.API.csproj", "{82AA1444-56C0-444E-B1EE-EBC33D5CE3B4}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{158BA35C-914C-4442-9120-9F4416F4FC87}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiskPlatform.Shared.Domain", "src\Shared\RiskPlatform.Shared.Domain\RiskPlatform.Shared.Domain.csproj", "{3ADFFDC3-D743-40E0-BC64-6330E05B67D5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +51,10 @@ Global
 		{82AA1444-56C0-444E-B1EE-EBC33D5CE3B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{82AA1444-56C0-444E-B1EE-EBC33D5CE3B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{82AA1444-56C0-444E-B1EE-EBC33D5CE3B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3ADFFDC3-D743-40E0-BC64-6330E05B67D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3ADFFDC3-D743-40E0-BC64-6330E05B67D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3ADFFDC3-D743-40E0-BC64-6330E05B67D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3ADFFDC3-D743-40E0-BC64-6330E05B67D5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,5 +68,7 @@ Global
 		{DA858F20-B777-4805-A172-2EC81F739593} = {C18A7CFD-9CF2-4A91-B669-42A151329A0D}
 		{A2A9426B-CA4A-413C-8B00-D931662A5954} = {C18A7CFD-9CF2-4A91-B669-42A151329A0D}
 		{82AA1444-56C0-444E-B1EE-EBC33D5CE3B4} = {C18A7CFD-9CF2-4A91-B669-42A151329A0D}
+		{158BA35C-914C-4442-9120-9F4416F4FC87} = {D824AC90-02AB-48CA-82C1-2AB635DE6993}
+		{3ADFFDC3-D743-40E0-BC64-6330E05B67D5} = {158BA35C-914C-4442-9120-9F4416F4FC87}
 	EndGlobalSection
 EndGlobal

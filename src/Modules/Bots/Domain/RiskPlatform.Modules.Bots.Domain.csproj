@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\RiskPlatform.Shared.Domain\RiskPlatform.Shared.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
