@@ -23,7 +23,7 @@ public class BotDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         // Configure your entities here
-        modelBuilder.HasDefaultSchema("Bots");
+        modelBuilder.HasDefaultSchema("BotsModule");
         modelBuilder.ApplyConfigurationsFromAssembly(this.GetType().Assembly);
 
         base.OnModelCreating(modelBuilder);

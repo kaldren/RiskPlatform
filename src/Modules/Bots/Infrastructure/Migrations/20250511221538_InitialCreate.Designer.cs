@@ -12,7 +12,7 @@ using RiskPlatform.Modules.Bots.Infrastructure.Persistence;
 namespace RiskPlatform.Modules.Bots.Infrastructure.Migrations
 {
     [DbContext(typeof(BotDbContext))]
-    [Migration("20250511220506_InitialCreate")]
+    [Migration("20250511221538_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -20,7 +20,7 @@ namespace RiskPlatform.Modules.Bots.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasDefaultSchema("Bots")
+                .HasDefaultSchema("BotsModule")
                 .HasAnnotation("ProductVersion", "8.0.15")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
@@ -55,7 +55,7 @@ namespace RiskPlatform.Modules.Bots.Infrastructure.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Bots", "Bots");
+                    b.ToTable("Bots", "BotsModule");
                 });
 
             modelBuilder.Entity("RiskPlatform.Modules.Bots.Domain.Entities.BotInputField", b =>
@@ -92,7 +92,7 @@ namespace RiskPlatform.Modules.Bots.Infrastructure.Migrations
 
                     b.HasIndex("BotId");
 
-                    b.ToTable("BotInputFields", "Bots");
+                    b.ToTable("BotInputFields", "BotsModule");
                 });
 
             modelBuilder.Entity("RiskPlatform.Modules.Bots.Domain.Entities.BotOutputFile", b =>
@@ -116,7 +116,7 @@ namespace RiskPlatform.Modules.Bots.Infrastructure.Migrations
 
                     b.HasIndex("BotId");
 
-                    b.ToTable("BotOutputFiles", "Bots");
+                    b.ToTable("BotOutputFiles", "BotsModule");
                 });
 
             modelBuilder.Entity("RiskPlatform.Modules.Bots.Domain.Entities.Bot", b =>
@@ -134,7 +134,7 @@ namespace RiskPlatform.Modules.Bots.Infrastructure.Migrations
 
                             b1.HasKey("BotId");
 
-                            b1.ToTable("Bots", "Bots");
+                            b1.ToTable("Bots", "BotsModule");
 
                             b1.WithOwner()
                                 .HasForeignKey("BotId");
@@ -175,7 +175,7 @@ namespace RiskPlatform.Modules.Bots.Infrastructure.Migrations
 
                             b1.HasKey("BotOutputFileId");
 
-                            b1.ToTable("BotOutputFiles", "Bots");
+                            b1.ToTable("BotOutputFiles", "BotsModule");
 
                             b1.WithOwner()
                                 .HasForeignKey("BotOutputFileId");

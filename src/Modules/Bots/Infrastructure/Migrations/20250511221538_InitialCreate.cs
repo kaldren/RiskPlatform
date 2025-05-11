@@ -12,11 +12,11 @@ namespace RiskPlatform.Modules.Bots.Infrastructure.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.EnsureSchema(
-                name: "Bots");
+                name: "BotsModule");
 
             migrationBuilder.CreateTable(
                 name: "Bots",
-                schema: "Bots",
+                schema: "BotsModule",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -34,7 +34,7 @@ namespace RiskPlatform.Modules.Bots.Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "BotInputFields",
-                schema: "Bots",
+                schema: "BotsModule",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -52,7 +52,7 @@ namespace RiskPlatform.Modules.Bots.Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_BotInputFields_Bots_BotId",
                         column: x => x.BotId,
-                        principalSchema: "Bots",
+                        principalSchema: "BotsModule",
                         principalTable: "Bots",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -60,7 +60,7 @@ namespace RiskPlatform.Modules.Bots.Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "BotOutputFiles",
-                schema: "Bots",
+                schema: "BotsModule",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -76,7 +76,7 @@ namespace RiskPlatform.Modules.Bots.Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_BotOutputFiles_Bots_BotId",
                         column: x => x.BotId,
-                        principalSchema: "Bots",
+                        principalSchema: "BotsModule",
                         principalTable: "Bots",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -84,19 +84,19 @@ namespace RiskPlatform.Modules.Bots.Infrastructure.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_BotInputFields_BotId",
-                schema: "Bots",
+                schema: "BotsModule",
                 table: "BotInputFields",
                 column: "BotId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BotOutputFiles_BotId",
-                schema: "Bots",
+                schema: "BotsModule",
                 table: "BotOutputFiles",
                 column: "BotId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Bots_Name",
-                schema: "Bots",
+                schema: "BotsModule",
                 table: "Bots",
                 column: "Name",
                 unique: true);
@@ -107,15 +107,15 @@ namespace RiskPlatform.Modules.Bots.Infrastructure.Migrations
         {
             migrationBuilder.DropTable(
                 name: "BotInputFields",
-                schema: "Bots");
+                schema: "BotsModule");
 
             migrationBuilder.DropTable(
                 name: "BotOutputFiles",
-                schema: "Bots");
+                schema: "BotsModule");
 
             migrationBuilder.DropTable(
                 name: "Bots",
-                schema: "Bots");
+                schema: "BotsModule");
         }
     }
 }
