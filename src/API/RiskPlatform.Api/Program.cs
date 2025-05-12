@@ -12,31 +12,37 @@ builder.Services.Configure<BotsModuleOptions>(
 builder.Services.AddBotsModuleInfrastructureServices(builder.Configuration);
 #endregion Bots Module
 
+#region Swagger
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new() { Title = "RiskPlatform API", Version = "v1" });
+});
+
+#endregion Swagger
+
 var app = builder.Build();
 
 #region Bots Module
 app.MapBotsModuleEndpoints();
 #endregion Bots Module
 
+#region Swagger
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "RiskPlatform API V1");
+        c.RoutePrefix = "swagger";
+    });
+}
+
+#endregion Swagger
+
 app.UseHttpsRedirection();
-
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast = Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-});
 
 app.Run();
 

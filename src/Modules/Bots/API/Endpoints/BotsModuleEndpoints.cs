@@ -8,7 +8,7 @@ public static class BotsModuleEndpoints
     public static RouteGroupBuilder MapBotsModuleEndpoints(this IEndpointRouteBuilder routes)
     {
         var group = routes.MapGroup("/bots")
-                          .WithTags("Bots");
+                          .WithTags("BotsModule");
 
         group.MapCreateBot();
         group.MapGetAllBots();
