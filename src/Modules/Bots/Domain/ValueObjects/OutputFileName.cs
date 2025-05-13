@@ -23,5 +23,7 @@ public sealed class OutputFileName
 
     public static implicit operator string(OutputFileName name) => name.Value;
 
+    public static OutputFileName From(string value) => new OutputFileName(value);
+
     private OutputFileName() { } // For EF Core
 }

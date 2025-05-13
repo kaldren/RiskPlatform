@@ -11,7 +11,8 @@ public static class BotsModuleEndpoints
                           .WithTags("BotsModule");
 
         group.MapCreateBot();
-        group.MapGetAllBots();
+        group.MapUploadBotScript();
+        group.MapRunBot();
 
         return group;
     }

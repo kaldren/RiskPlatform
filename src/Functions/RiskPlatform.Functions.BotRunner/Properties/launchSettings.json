@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "RiskPlatform.Functions.Bots": {
+      "commandName": "Project",
+      "commandLineArgs": "--port 7030",
+      "launchBrowser": false
+    }
+  }
+}
