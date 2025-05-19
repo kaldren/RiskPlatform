@@ -5,7 +5,6 @@ namespace RiskPlatform.Modules.Bots.Application.Interfaces;
 public interface IBotRepository
 {
     Task<CreateBotResponse> CreateBotAsync(CreateBotRequest request);
-    Task<bool> CreateBotScriptAsync(int botId, string url);
     Task<CreateBotResponse> GetBotAsync(string name);
     //Task<CreateBotResponse> GetBotAsync(int botId);
 

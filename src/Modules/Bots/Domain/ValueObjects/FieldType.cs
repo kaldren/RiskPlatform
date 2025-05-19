@@ -3,7 +3,7 @@
 public sealed class FieldType
 {
     // Allowed field types list
-    public static readonly List<string> AllowedFieldTypes = new() { "Numeric", "String" };
+    public static readonly List<string> AllowedFieldTypes = new() { "int", "string", "boolean" };
 
     public string Value { get; }
 

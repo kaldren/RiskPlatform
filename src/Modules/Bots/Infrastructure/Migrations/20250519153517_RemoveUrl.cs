@@ -5,27 +5,26 @@
 namespace RiskPlatform.Modules.Bots.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate7 : Migration
+    public partial class RemoveUrl : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<int>(
-                name: "Status",
+            migrationBuilder.DropColumn(
+                name: "Url",
                 schema: "BotsModule",
-                table: "Bots",
-                type: "int",
-                nullable: false,
-                defaultValue: 0);
+                table: "Outputs");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "Status",
+            migrationBuilder.AddColumn<string>(
+                name: "Url",
                 schema: "BotsModule",
-                table: "Bots");
+                table: "Outputs",
+                type: "nvarchar(max)",
+                nullable: true);
         }
     }
 }

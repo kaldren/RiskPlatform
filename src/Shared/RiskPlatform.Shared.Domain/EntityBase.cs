@@ -3,6 +3,8 @@
 public abstract class EntityBase<TId>
 {
     public TId Id { get; set; } = default!;
-    public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;
-    public DateTimeOffset? ModifiedAt { get; set; }
+
+    // Store UTC time like Azure does
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime ModifiedAt { get; set; }
 }

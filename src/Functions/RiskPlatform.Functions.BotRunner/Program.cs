@@ -16,6 +16,7 @@ builder.Services
     .AddAzureClients(config =>
     {
         config.AddServiceBusClient(builder.Configuration["ServiceBus"]);
+        config.AddBlobServiceClient(builder.Configuration["StorageAccount"]);
     });
 
 builder.Build().Run();

@@ -24,27 +24,12 @@ public class BotRepository : IBotRepository
         {
             Name = request.Name,
             Description = request.Description,
-            Status = BotStatus.Draft,
-            InputFields = request.InputParameters.Select(f => new InputParameter
+            Inputs = request.InputParameters.Select(f => new Input
             {
-                FieldName = f.FieldName,
-                FieldType = FieldType.From(f.FieldType),
-                FieldDescription = f.FieldDescription,
+                Name = f.FieldName,
+                Type = FieldType.From(f.FieldType),
                 DefaultValue = f.DefaultValue,
-                IsRequired = f.IsRequired,
             }).ToList(),
-
-            InputFiles = request.InputFileParameters.Select(f => new InputFileParameter
-            {
-                FileExtension = FileExtension.From(f.FileExtension),
-                Description = f.Description,
-                IsRequired = f.IsRequired
-            }).ToList(),
-
-            OutputFiles = request.OutputFileParameters.Select(o => new OutputFileParameter
-            {
-                FileName = OutputFileName.From(o.FileName)
-            }).ToList()
         };
 
         _botsDbContext.Bots.Add(bot);
@@ -58,18 +43,6 @@ public class BotRepository : IBotRepository
             Name = bot.Name,
             Description = bot.Description,
         };
-    }
-
-
-    public async Task<bool> CreateBotScriptAsync(int botId, string url)
-    {
-        _botsDbContext.Add(new Script
-        {
-            BotId = botId,
-            FileUrl = url
-        });
-
-        return await _botsDbContext.SaveChangesAsync() > 0;
     }
 
     public async Task<CreateBotResponse> GetBotAsync(string name)
