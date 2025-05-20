@@ -12,8 +12,8 @@ using RiskPlatform.Modules.Bots.Infrastructure.Persistence;
 namespace RiskPlatform.Modules.Bots.Infrastructure.Migrations
 {
     [DbContext(typeof(BotDbContext))]
-    [Migration("20250519154041_RunsTable")]
-    partial class RunsTable
+    [Migration("20250520055110_InitialCreate22")]
+    partial class InitialCreate22
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -63,7 +63,7 @@ namespace RiskPlatform.Modules.Bots.Infrastructure.Migrations
                     b.ToTable("Bots", "BotsModule");
                 });
 
-            modelBuilder.Entity("RiskPlatform.Modules.Bots.Domain.Entities.Input", b =>
+            modelBuilder.Entity("RiskPlatform.Modules.Bots.Domain.Entities.BotInput", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -92,10 +92,10 @@ namespace RiskPlatform.Modules.Bots.Infrastructure.Migrations
 
                     b.HasIndex("BotId");
 
-                    b.ToTable("Inputs", "BotsModule");
+                    b.ToTable("BotInputs", "BotsModule");
                 });
 
-            modelBuilder.Entity("RiskPlatform.Modules.Bots.Domain.Entities.Output", b =>
+            modelBuilder.Entity("RiskPlatform.Modules.Bots.Domain.Entities.BotOutput", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -121,16 +121,16 @@ namespace RiskPlatform.Modules.Bots.Infrastructure.Migrations
 
                     b.HasIndex("BotId");
 
-                    b.ToTable("Outputs", "BotsModule");
+                    b.ToTable("BotOutputs", "BotsModule");
                 });
 
-            modelBuilder.Entity("RiskPlatform.Modules.Bots.Domain.Entities.Runs", b =>
+            modelBuilder.Entity("RiskPlatform.Modules.Bots.Domain.Entities.Run", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("BotId")
                         .HasColumnType("int");
@@ -153,7 +153,75 @@ namespace RiskPlatform.Modules.Bots.Infrastructure.Migrations
                     b.ToTable("Runs", "BotsModule");
                 });
 
-            modelBuilder.Entity("RiskPlatform.Modules.Bots.Domain.Entities.Input", b =>
+            modelBuilder.Entity("RiskPlatform.Modules.Bots.Domain.Entities.RunInput", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BotInputId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("RunId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BotInputId");
+
+                    b.HasIndex("RunId");
+
+                    b.ToTable("RunInputs", "BotsModule");
+                });
+
+            modelBuilder.Entity("RiskPlatform.Modules.Bots.Domain.Entities.RunOutput", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BotOutputId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("RunId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BotOutputId");
+
+                    b.HasIndex("RunId");
+
+                    b.ToTable("RunOutputs", "BotsModule");
+                });
+
+            modelBuilder.Entity("RiskPlatform.Modules.Bots.Domain.Entities.BotInput", b =>
                 {
                     b.HasOne("RiskPlatform.Modules.Bots.Domain.Entities.Bot", "Bot")
                         .WithMany("Inputs")
@@ -163,7 +231,7 @@ namespace RiskPlatform.Modules.Bots.Infrastructure.Migrations
 
                     b.OwnsOne("RiskPlatform.Modules.Bots.Domain.ValueObjects.FieldType", "Type", b1 =>
                         {
-                            b1.Property<int>("InputId")
+                            b1.Property<int>("BotInputId")
                                 .HasColumnType("int");
 
                             b1.Property<string>("Value")
@@ -172,12 +240,12 @@ namespace RiskPlatform.Modules.Bots.Infrastructure.Migrations
                                 .HasColumnType("nvarchar(255)")
                                 .HasColumnName("FieldType");
 
-                            b1.HasKey("InputId");
+                            b1.HasKey("BotInputId");
 
-                            b1.ToTable("Inputs", "BotsModule");
+                            b1.ToTable("BotInputs", "BotsModule");
 
                             b1.WithOwner()
-                                .HasForeignKey("InputId");
+                                .HasForeignKey("BotInputId");
                         });
 
                     b.Navigation("Bot");
@@ -186,7 +254,7 @@ namespace RiskPlatform.Modules.Bots.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("RiskPlatform.Modules.Bots.Domain.Entities.Output", b =>
+            modelBuilder.Entity("RiskPlatform.Modules.Bots.Domain.Entities.BotOutput", b =>
                 {
                     b.HasOne("RiskPlatform.Modules.Bots.Domain.Entities.Bot", "Bot")
                         .WithMany("Outputs")
@@ -197,7 +265,7 @@ namespace RiskPlatform.Modules.Bots.Infrastructure.Migrations
                     b.Navigation("Bot");
                 });
 
-            modelBuilder.Entity("RiskPlatform.Modules.Bots.Domain.Entities.Runs", b =>
+            modelBuilder.Entity("RiskPlatform.Modules.Bots.Domain.Entities.Run", b =>
                 {
                     b.HasOne("RiskPlatform.Modules.Bots.Domain.Entities.Bot", "Bot")
                         .WithMany("Runs")
@@ -208,6 +276,44 @@ namespace RiskPlatform.Modules.Bots.Infrastructure.Migrations
                     b.Navigation("Bot");
                 });
 
+            modelBuilder.Entity("RiskPlatform.Modules.Bots.Domain.Entities.RunInput", b =>
+                {
+                    b.HasOne("RiskPlatform.Modules.Bots.Domain.Entities.BotInput", "BotInput")
+                        .WithMany("RunInputs")
+                        .HasForeignKey("BotInputId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("RiskPlatform.Modules.Bots.Domain.Entities.Run", "Run")
+                        .WithMany("RunInputs")
+                        .HasForeignKey("RunId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("BotInput");
+
+                    b.Navigation("Run");
+                });
+
+            modelBuilder.Entity("RiskPlatform.Modules.Bots.Domain.Entities.RunOutput", b =>
+                {
+                    b.HasOne("RiskPlatform.Modules.Bots.Domain.Entities.BotOutput", "BotOutput")
+                        .WithMany("RunOutputs")
+                        .HasForeignKey("BotOutputId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("RiskPlatform.Modules.Bots.Domain.Entities.Run", "Run")
+                        .WithMany("RunOutputs")
+                        .HasForeignKey("RunId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("BotOutput");
+
+                    b.Navigation("Run");
+                });
+
             modelBuilder.Entity("RiskPlatform.Modules.Bots.Domain.Entities.Bot", b =>
                 {
                     b.Navigation("Inputs");
@@ -215,6 +321,23 @@ namespace RiskPlatform.Modules.Bots.Infrastructure.Migrations
                     b.Navigation("Outputs");
 
                     b.Navigation("Runs");
+                });
+
+            modelBuilder.Entity("RiskPlatform.Modules.Bots.Domain.Entities.BotInput", b =>
+                {
+                    b.Navigation("RunInputs");
+                });
+
+            modelBuilder.Entity("RiskPlatform.Modules.Bots.Domain.Entities.BotOutput", b =>
+                {
+                    b.Navigation("RunOutputs");
+                });
+
+            modelBuilder.Entity("RiskPlatform.Modules.Bots.Domain.Entities.Run", b =>
+                {
+                    b.Navigation("RunInputs");
+
+                    b.Navigation("RunOutputs");
                 });
 #pragma warning restore 612, 618
         }

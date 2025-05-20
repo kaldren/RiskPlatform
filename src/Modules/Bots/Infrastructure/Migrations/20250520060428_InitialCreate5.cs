@@ -5,7 +5,7 @@
 namespace RiskPlatform.Modules.Bots.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class NullableOutputName : Migration
+    public partial class InitialCreate5 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

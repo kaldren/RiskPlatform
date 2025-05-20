@@ -24,7 +24,7 @@ public class BotRepository : IBotRepository
         {
             Name = request.Name,
             Description = request.Description,
-            Inputs = request.InputParameters.Select(f => new Input
+            BotInputs = request.InputParameters.Select(f => new BotInput
             {
                 Name = f.FieldName,
                 Type = FieldType.From(f.FieldType),

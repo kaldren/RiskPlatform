@@ -11,11 +11,11 @@ public class Bot : EntityBase<int>
     public string ScriptUrl { get; set; } = default!;
 
     // Each bot can have multiple inputs (e.g., parameters)
-    public ICollection<Input> Inputs { get; set; } = new List<Input>();
+    public ICollection<BotInput> BotInputs { get; set; } = new List<BotInput>();
 
     // Each bot can have multiple filename outputs (e.g., generated files)
-    public ICollection<Output> Outputs { get; set; } = new List<Output>();
+    public ICollection<BotOutput> BotOutputs { get; set; } = new List<BotOutput>();
 
     // Each bot can have multiple runs
-    public ICollection<Runs> Runs { get; set; } = new List<Runs>();
+    public ICollection<Run> Runs { get; set; } = new List<Run>();
 }

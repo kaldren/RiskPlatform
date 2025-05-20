@@ -19,7 +19,7 @@ namespace RiskPlatform.Functions.Bots
 
         [Function(nameof(RunBot))]
         public async Task Run(
-            [ServiceBusTrigger("run-bot-queue", Connection = "ServiceBus")]
+            [ServiceBusTrigger("bot-runs-queue", Connection = "ServiceBus")]
             ServiceBusReceivedMessage message,
             ServiceBusMessageActions messageActions)
         {
