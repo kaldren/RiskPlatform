@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RiskPlatform.Modules.Bots.Domain.Entities;
+using RiskPlatform.Modules.Bots.Domain.ValueObjects;
 using System.Reflection.Emit;
 
 namespace RiskPlatform.Modules.Bots.Infrastructure.Persistence
@@ -10,128 +11,166 @@ namespace RiskPlatform.Modules.Bots.Infrastructure.Persistence
             : base(options) { }
 
         public DbSet<Bot> Bots { get; set; }
-        public DbSet<BotInput> Inputs { get; set; }
-        public DbSet<BotOutput> Outputs { get; set; }
-        public DbSet<Run> Runs { get; set; }
-        public DbSet<RunInput> RunInputs { get; set; }
-        public DbSet<RunOutput> RunOutputs { get; set; }
+        public DbSet<BotParameter> Parameters { get; set; }
+        public DbSet<BotFile> Files { get; set; }
+        public DbSet<BotRun> Runs { get; set; }
+        public DbSet<BotRunParameter> RunParameters { get; set; }
+        public DbSet<BotRunFile> RunFiles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder mb)
         {
             mb.HasDefaultSchema("BotsModule");
 
+            // Configure the entity mappings
+
+            // Bot
             mb.Entity<Bot>(b =>
             {
-                b.ToTable("Bots").HasKey(x => x.Id);
+                b.ToTable("Bots");
+
+                b.HasKey(x => x.Id);
 
                 b.Property(x => x.Name)
-                    .IsRequired().HasMaxLength(100);
-                b.HasIndex(x => x.Name).IsUnique();
+                    .IsRequired()
+                    .HasMaxLength(100);
 
                 b.Property(x => x.Description)
-                    .IsRequired().HasMaxLength(500);
+                    .IsRequired()
+                    .HasMaxLength(500);
 
                 b.Property(x => x.ScriptUrl)
-                    .IsRequired().HasMaxLength(500);
+                    .IsRequired()
+                    .HasMaxLength(500);
 
-                b.HasMany(x => x.BotInputs)
+                b.Property(x => x.IsActive)
+                    .IsRequired()
+                    .HasDefaultValue(false);
+
+                b.HasMany(x => x.Parameters)
                  .WithOne(x => x.Bot)
                  .HasForeignKey(x => x.BotId)
                  .OnDelete(DeleteBehavior.Cascade);
 
-                b.HasMany(x => x.BotOutputs)
-                    .WithOne(x => x.Bot)
-                    .HasForeignKey(x => x.BotId)
-                    .OnDelete(DeleteBehavior.Cascade);
+                b.HasMany(x => x.Files)
+                 .WithOne(x => x.Bot)
+                 .HasForeignKey(x => x.BotId)
+                 .OnDelete(DeleteBehavior.Cascade);
 
                 b.HasMany(x => x.Runs)
-                    .WithOne(x => x.Bot)
-                    .HasForeignKey(x => x.BotId)
-                    .OnDelete(DeleteBehavior.Cascade);
-            });
-
-            mb.Entity<BotInput>(p =>
-            {
-                p.ToTable("BotInputs").HasKey(x => x.Id);
-
-                p.Property(x => x.Name)
-                 .IsRequired().HasMaxLength(100);
-
-                p.HasOne(x => x.Bot)
-                    .WithMany(b => b.BotInputs)
-                    .HasForeignKey(x => x.BotId);
-
-                p.OwnsOne(x => x.Type, o =>
-                    o.Property(t => t.Value)
-                     .HasColumnName("FieldType")
-                     .IsRequired()
-                     .HasMaxLength(255));
-            });
-
-            mb.Entity<BotOutput>(o =>
-            {
-                o.ToTable("BotOutputs").HasKey(x => x.Id);
-
-                o.Property(x => x.Name)
-                 .IsRequired().HasMaxLength(255);
-
-                o.HasOne(x => x.Bot)
-                 .WithMany(b => b.BotOutputs)
-                 .HasForeignKey(x => x.BotId);
-            });
-
-            mb.Entity<Run>(r =>
-            {
-                r.ToTable("Runs").HasKey(x => x.Id);
-                r.Property(x => x.Status)
-                 .IsRequired().HasMaxLength(255);
-                r.HasOne(x => x.Bot)
-                 .WithMany(b => b.Runs)
-                 .HasForeignKey(x => x.BotId);
-            });
-
-            // RunInput
-            mb.Entity<RunInput>(b =>
-            {
-                b.ToTable("RunInputs");
-
-                b.HasKey(ri => ri.Id);
-
-                b.Property(ri => ri.Value)
-                 .IsRequired()
-                 .HasMaxLength(1000);
-
-                b.HasOne(ri => ri.Run)
-                 .WithMany(r => r.RunInputs)
-                 .HasForeignKey(ri => ri.RunId)
-                 .OnDelete(DeleteBehavior.Cascade);
-
-                b.HasOne(ri => ri.BotInput)
-                 .WithMany(bi => bi.RunInputs)
-                 .HasForeignKey(ri => ri.BotInputId)
+                 .WithOne(x => x.Bot)
+                 .HasForeignKey(x => x.BotId)
                  .OnDelete(DeleteBehavior.Restrict);
             });
 
-            // RunOutput
-            mb.Entity<RunOutput>(b =>
+            mb.Entity<BotParameter>(b =>
             {
-                b.ToTable("RunOutputs");
+                b.ToTable("BotParameters");
 
-                b.HasKey(ro => ro.Id);
+                b.HasKey(x => x.Id);
 
-                b.Property(ro => ro.Url)
-                 .IsRequired()
-                 .HasMaxLength(1000);
+                b.Property(x => x.Name)
+                    .IsRequired()
+                    .HasMaxLength(100);
 
-                b.HasOne(ro => ro.Run)
-                 .WithMany(r => r.RunOutputs)
-                 .HasForeignKey(ro => ro.RunId)
-                 .OnDelete(DeleteBehavior.Cascade);
+                b.Property(x => x.DataType)
+                    .IsRequired()
+                    .HasConversion(
+                        v => v.ToString(),
+                        v => (ParameterDataType)Enum.Parse(typeof(ParameterDataType), v))
+                    .HasMaxLength(50);
 
-                b.HasOne(ro => ro.BotOutput)
-                 .WithMany(bo => bo.RunOutputs)
-                 .HasForeignKey(ro => ro.BotOutputId)
-                 .OnDelete(DeleteBehavior.Restrict);
+                b.Property(x => x.Description)
+                    .IsRequired()
+                    .HasMaxLength(500);
+
+                b.Property(x => x.DefaultValue)
+                    .HasMaxLength(500);
+
+                b.Property(x => x.IsRequired)
+                    .IsRequired()
+                    .HasDefaultValue(false);
+            });
+
+            mb.Entity<BotFile>(b => {
+
+                b.ToTable("BotFiles");
+
+                b.HasKey(x => x.Id);
+
+                b.Property(x => x.Description)
+                    .IsRequired()
+                    .HasMaxLength(500);
+
+                b.Property(x => x.FileType)
+                    .IsRequired()
+                    .HasConversion(
+                        v => v.ToString(),
+                        v => (FileType)Enum.Parse(typeof(FileType), v))
+                    .HasMaxLength(50);
+
+                b.Property(x => x.IsRequired)
+                    .IsRequired()
+                    .HasDefaultValue(false);
+            });
+
+            mb.Entity<BotRun>(b =>
+            {
+                b.ToTable("BotRuns");
+
+                b.HasKey(x => x.Id);
+
+                b.Property(x => x.Status)
+                    .IsRequired()
+                    .HasConversion(
+                        v => v.ToString(),
+                        v => (BotRunStatus)Enum.Parse(typeof(BotRunStatus), v))
+                    .HasMaxLength(50);
+
+                b.Property(x => x.StartedAt)
+                    .IsRequired();
+
+                b.Property(x => x.EndedAt)
+                    .IsRequired();
+            });
+
+            mb.Entity<BotRunParameter>(b => {
+                b.ToTable("BotRunParameters");
+
+                b.HasKey(x => x.Id);
+
+                b.Property(x => x.Value)
+                    .IsRequired()
+                    .HasMaxLength(500);
+
+                b.HasOne(x => x.BotRun)
+                  .WithMany()
+                  .HasForeignKey(x => x.BotRunId)
+                  .OnDelete(DeleteBehavior.Restrict);
+
+                b.HasOne(x => x.BotParameter)
+                  .WithMany()
+                  .HasForeignKey(x => x.BotParameterId)
+                  .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            mb.Entity<BotRunFile>(b =>
+            {
+                b.ToTable("BotRunFiles");
+
+                b.HasKey(x => x.Id);
+
+                b.Property(x => x.FileName)
+                    .IsRequired()
+                    .HasMaxLength(500);
+
+                b.Property(x => x.Url)
+                    .IsRequired()
+                    .HasMaxLength(500);
+
+                b.HasOne(x => x.BotRun)
+                  .WithMany()
+                  .HasForeignKey(x => x.BotRunId)
+                  .OnDelete(DeleteBehavior.Restrict);
             });
         }
     }

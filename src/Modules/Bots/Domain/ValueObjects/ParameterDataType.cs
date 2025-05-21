@@ -1,13 +1,13 @@
 ﻿namespace RiskPlatform.Modules.Bots.Domain.ValueObjects;
 
-public sealed class FieldType
+public sealed class ParameterDataType
 {
     // Allowed field types list
-    public static readonly List<string> AllowedFieldTypes = new() { "number", "string", "boolean", "file" };
+    public static readonly List<string> AllowedFieldTypes = new() { "number", "string", "boolean" };
 
     public string Value { get; }
 
-    public FieldType(string value)
+    public ParameterDataType(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
             throw new ArgumentException("Field type cannot be empty.", nameof(value));
@@ -18,7 +18,7 @@ public sealed class FieldType
 
     public override string ToString() => Value;
 
-    public static implicit operator string(FieldType type) => type.Value;
+    public static implicit operator string(ParameterDataType type) => type.Value;
 
-    public static FieldType From(string value) => new FieldType(value);
+    public static ParameterDataType From(string value) => new ParameterDataType(value);
 }

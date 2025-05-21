@@ -2,20 +2,29 @@
 
 namespace RiskPlatform.Modules.Bots.Domain.Entities;
 
+//BotId(bigint, PK)
+//Name(nvarchar)
+//Description(nvarchar)
+//ScriptUrl(nvarchar)
+//CreatedAt(datetime)
+//UpdatedAt(datetime)
+//IsActive(bit)
+
 public class Bot : EntityBase<int>
 {
     public string Name { get; set; } = default!;
     public string Description { get; set; } = default!;
-
-    // Script will be uploaded manually for now
     public string ScriptUrl { get; set; } = default!;
+    public bool IsActive { get; set; }
 
-    // Each bot can have multiple inputs (e.g., parameters)
-    public ICollection<BotInput> BotInputs { get; set; } = new List<BotInput>();
+    // Navigation properties
 
-    // Each bot can have multiple filename outputs (e.g., generated files)
-    public ICollection<BotOutput> BotOutputs { get; set; } = new List<BotOutput>();
+    // Each bot has collection of parameters
+    public ICollection<BotParameter> Parameters { get; set; } = new List<BotParameter>();
 
-    // Each bot can have multiple runs
-    public ICollection<Run> Runs { get; set; } = new List<Run>();
+    // Each bot has collection of files
+    public ICollection<BotFile> Files { get; set; } = new List<BotFile>();
+
+    // Each bot has collection of runs
+    public ICollection<BotRun> Runs { get; set; } = new List<BotRun>();
 }

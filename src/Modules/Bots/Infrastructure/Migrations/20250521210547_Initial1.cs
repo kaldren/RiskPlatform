@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace RiskPlatform.Modules.Bots.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate51 : Migration
+    public partial class Initial1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -24,6 +24,7 @@ namespace RiskPlatform.Modules.Bots.Infrastructure.Migrations
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     ScriptUrl = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -33,7 +34,33 @@ namespace RiskPlatform.Modules.Bots.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Inputs",
+                name: "BotFiles",
+                schema: "BotsModule",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BotId = table.Column<int>(type: "int", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    FileType = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    IsRequired = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BotFiles", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BotFiles_Bots_BotId",
+                        column: x => x.BotId,
+                        principalSchema: "BotsModule",
+                        principalTable: "Bots",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BotParameters",
                 schema: "BotsModule",
                 columns: table => new
                 {
@@ -41,16 +68,18 @@ namespace RiskPlatform.Modules.Bots.Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     BotId = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    FieldType = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    DefaultValue = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DataType = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    DefaultValue = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                    IsRequired = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Inputs", x => x.Id);
+                    table.PrimaryKey("PK_BotParameters", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Inputs_Bots_BotId",
+                        name: "FK_BotParameters_Bots_BotId",
                         column: x => x.BotId,
                         principalSchema: "BotsModule",
                         principalTable: "Bots",
@@ -59,164 +88,122 @@ namespace RiskPlatform.Modules.Bots.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Outputs",
+                name: "BotRuns",
                 schema: "BotsModule",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     BotId = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    StartedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Outputs", x => x.Id);
+                    table.PrimaryKey("PK_BotRuns", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Outputs_Bots_BotId",
+                        name: "FK_BotRuns_Bots_BotId",
                         column: x => x.BotId,
                         principalSchema: "BotsModule",
                         principalTable: "Bots",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Runs",
+                name: "BotRunFiles",
                 schema: "BotsModule",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    BotId = table.Column<int>(type: "int", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    BotRunId = table.Column<int>(type: "int", nullable: false),
+                    FileName = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    Url = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Runs", x => x.Id);
+                    table.PrimaryKey("PK_BotRunFiles", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Runs_Bots_BotId",
-                        column: x => x.BotId,
+                        name: "FK_BotRunFiles_BotRuns_BotRunId",
+                        column: x => x.BotRunId,
                         principalSchema: "BotsModule",
-                        principalTable: "Bots",
+                        principalTable: "BotRuns",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "RunInputs",
+                name: "BotRunParameters",
                 schema: "BotsModule",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RunId = table.Column<int>(type: "int", nullable: false),
-                    BotInputId = table.Column<int>(type: "int", nullable: false),
-                    Value = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
+                    BotRunId = table.Column<int>(type: "int", nullable: false),
+                    BotParameterId = table.Column<int>(type: "int", nullable: false),
+                    Value = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RunInputs", x => x.Id);
+                    table.PrimaryKey("PK_BotRunParameters", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_RunInputs_Inputs_BotInputId",
-                        column: x => x.BotInputId,
+                        name: "FK_BotRunParameters_BotParameters_BotParameterId",
+                        column: x => x.BotParameterId,
                         principalSchema: "BotsModule",
-                        principalTable: "Inputs",
+                        principalTable: "BotParameters",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_RunInputs_Runs_RunId",
-                        column: x => x.RunId,
+                        name: "FK_BotRunParameters_BotRuns_BotRunId",
+                        column: x => x.BotRunId,
                         principalSchema: "BotsModule",
-                        principalTable: "Runs",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "RunOutputs",
-                schema: "BotsModule",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    RunId = table.Column<int>(type: "int", nullable: false),
-                    BotOutputId = table.Column<int>(type: "int", nullable: false),
-                    Url = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RunOutputs", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_RunOutputs_Outputs_BotOutputId",
-                        column: x => x.BotOutputId,
-                        principalSchema: "BotsModule",
-                        principalTable: "Outputs",
+                        principalTable: "BotRuns",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_RunOutputs_Runs_RunId",
-                        column: x => x.RunId,
-                        principalSchema: "BotsModule",
-                        principalTable: "Runs",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Bots_Name",
+                name: "IX_BotFiles_BotId",
                 schema: "BotsModule",
-                table: "Bots",
-                column: "Name",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Inputs_BotId",
-                schema: "BotsModule",
-                table: "Inputs",
+                table: "BotFiles",
                 column: "BotId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Outputs_BotId",
+                name: "IX_BotParameters_BotId",
                 schema: "BotsModule",
-                table: "Outputs",
+                table: "BotParameters",
                 column: "BotId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RunInputs_BotInputId",
+                name: "IX_BotRunFiles_BotRunId",
                 schema: "BotsModule",
-                table: "RunInputs",
-                column: "BotInputId");
+                table: "BotRunFiles",
+                column: "BotRunId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RunInputs_RunId",
+                name: "IX_BotRunParameters_BotParameterId",
                 schema: "BotsModule",
-                table: "RunInputs",
-                column: "RunId");
+                table: "BotRunParameters",
+                column: "BotParameterId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RunOutputs_BotOutputId",
+                name: "IX_BotRunParameters_BotRunId",
                 schema: "BotsModule",
-                table: "RunOutputs",
-                column: "BotOutputId");
+                table: "BotRunParameters",
+                column: "BotRunId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RunOutputs_RunId",
+                name: "IX_BotRuns_BotId",
                 schema: "BotsModule",
-                table: "RunOutputs",
-                column: "RunId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Runs_BotId",
-                schema: "BotsModule",
-                table: "Runs",
+                table: "BotRuns",
                 column: "BotId");
         }
 
@@ -224,23 +211,23 @@ namespace RiskPlatform.Modules.Bots.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "RunInputs",
+                name: "BotFiles",
                 schema: "BotsModule");
 
             migrationBuilder.DropTable(
-                name: "RunOutputs",
+                name: "BotRunFiles",
                 schema: "BotsModule");
 
             migrationBuilder.DropTable(
-                name: "Inputs",
+                name: "BotRunParameters",
                 schema: "BotsModule");
 
             migrationBuilder.DropTable(
-                name: "Outputs",
+                name: "BotParameters",
                 schema: "BotsModule");
 
             migrationBuilder.DropTable(
-                name: "Runs",
+                name: "BotRuns",
                 schema: "BotsModule");
 
             migrationBuilder.DropTable(

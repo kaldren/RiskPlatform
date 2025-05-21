@@ -24,11 +24,17 @@ public class BotRepository : IBotRepository
         {
             Name = request.Name,
             Description = request.Description,
-            BotInputs = request.InputParameters.Select(f => new BotInput
+            Parameters = request.InputParameters.Select(f => new BotParameter
             {
                 Name = f.FieldName,
-                Type = FieldType.From(f.FieldType),
+                DataType = ParameterDataType.From(f.FieldType),
                 DefaultValue = f.DefaultValue,
+            }).ToList(),
+            Files = request.InputFileParameters.Select(f => new BotFile
+            {
+                Description = f.Description,
+                FileType = FileType.From(f.FileType),
+                IsRequired = f.IsRequired,
             }).ToList(),
         };
 

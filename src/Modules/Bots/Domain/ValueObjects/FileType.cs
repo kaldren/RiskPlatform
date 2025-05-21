@@ -3,12 +3,12 @@
 namespace RiskPlatform.Modules.Bots.Domain.ValueObjects;
 
 [NotMapped]
-public sealed class FileExtension
+public sealed class FileType
 {
     private static readonly string[] AllowedExtensions = [".txt", ".xlsx", ".csv"];
 
     public string Value { get; }
-    public FileExtension(string value)
+    public FileType(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
             throw new ArgumentException("File name cannot be empty.", nameof(value));
@@ -21,9 +21,9 @@ public sealed class FileExtension
 
     public override string ToString() => Value;
 
-    public static implicit operator string(FileExtension name) => name.Value;
+    public static implicit operator string(FileType name) => name.Value;
 
-    public static FileExtension From(string value) => new FileExtension(value);
+    public static FileType From(string value) => new FileType(value);
 
-    private FileExtension() { } // For EF Core
+    private FileType() { } // For EF Core
 }
